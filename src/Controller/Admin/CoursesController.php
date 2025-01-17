@@ -228,7 +228,7 @@ class CoursesController extends AppController
         if (in_array($action, ['index', 'view', 'edit', 'delete', 'add', 'addUserToCourse', 'removeUserFromCourse', 'login', 'logout']) && ($user['roles_id'] == '1')) {
             return true;
         } else {
-            return   $this->Flash->error(__('El usuario no ha podido ingresar. Intentelo nuevamente.'));
+            return   $this->Flash->error(__('El usuario no ha podido ingresar. Intentelo nuevamente :D.'));
         }
     }
 }
