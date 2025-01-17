@@ -1,0 +1,226 @@
+blockquote {
+    padding: 4px 31px !important;
+    margin: 0 0.4% 30px !important;
+    font-size: 17.5px !important;
+    border-left: 5px solid black !important;
+    background: black !important;
+    border-radius: 18px !important;
+    border: 2px solid black;
+    letter-spacing: 3px;
+}
+
+.tamano {
+    margin-top: 3px;
+    width: 200px;
+}
+
+.select2-container .select2-selection--single {
+
+    height: 34px !important;
+}
+
+.paginator {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.pagination {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination li {
+    display: flex;
+    margin-right: 5px;
+}
+
+.pagination li a,
+.pagination li span {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination li a:hover,
+.pagination li a:focus,
+.pagination li span.current {
+    background-color: #e7e7e7;
+}
+
+.pagination li.disabled span {
+    color: #999;
+    pointer-events: none;
+    cursor: default;
+}
+
+.paginator p {
+    margin: 0;
+    font-size: 14px;
+    color: #999;
+}
+
+.btn .btn,
+.btn .btn-group,
+.btn .input-group {
+    background-color: #7386D5;
+    width: auto;
+    height: auto;
+    color: white;
+}
+
+.btn .btn,
+.btn .btn-group,
+.btn .input-group:hover {
+    background-color: #7386D5;
+    width: auto;
+    height: auto;
+    color: white;
+}
+
+
+
+.pruebita {
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.centrar {
+    border-top: 2px solid black;
+    text-align: center;
+}
+
+.titulo {
+    margin-top: 17px;
+}
+
+.separacion {
+    margin-top: 100px;
+}
+
+.tituloid {
+    text-align: center;
+
+}
+
+.general {
+    padding: 50px;
+
+}
+
+h1 {
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 30px !important;
+    text-align: center;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+h2 {
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 30px !important;
+    text-align: center;
+    font-weight: bold !important;
+}
+
+p {
+
+    font-size: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.btn-toolbar>.btn,
+.btn-toolbar>.btn-group,
+.btn-toolbar>.input-group {
+    margin-left: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.ul {
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+}
+
+.li {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+hr {
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+    border-top: 1px solid black !important;
+}
+
+body {
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    text-transform: uppercase;
+
+
+}
+
+.btn-admin {
+    background-color: #54a6d3;
+    color: white !important;
+    border: none !important;
+    font-weight: bold !important;
+
+}
+
+.agregar {
+    color: #54a6d3;
+}
+
+.espacio {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+.tag-btn {
+    margin-top: 5px;
+}
+
+.icon-color {
+
+    color: #7386D5;
+
+}
+.icon-color-trash{
+    color: rgb(168, 45, 45);
+}
+
+.pagination>.disabled>a {
+    background-color: #54a6d3 !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.entered {
+
+    width: 1000px !important;
+    height: auto !important;
+}
+
+.lazyloaded {
+
+    width: 1000px !important;
+    height: auto !important;
+}
