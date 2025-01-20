@@ -481,8 +481,11 @@ div.message.hidden {
 /* Use 'one true layout' methods to get equal height columns */
 .container {
     overflow: hidden;
-    min-height: 92%; /* full height almost always */
+    min-height: 92%;
 }
+
+
+
 
 /* Force equal height by overflowing */
 .content,

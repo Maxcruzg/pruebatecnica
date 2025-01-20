@@ -78,7 +78,6 @@
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus icon-special"></i></button>
                 </div>
-
             </div>
             <div class="box-body">
                 <div class="row">
@@ -90,64 +89,66 @@
                                 ['class' => 'btn btn-success w-100', 'escape' => false]
                             ) ?>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover text-center">
-                                <thead>
-                                    <tr>
-                                        <th>RUT</th>
-                                        <th>Nombre</th>
-                                        <th>Email</th>
-                                        <th>Rol</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <?php if ($users->isEmpty()) : ?>
-                                    <tr>
-                                        <td colspan="5" style="text-align: center;">No se han encontrado usuarios con esas características</td>
-                                    </tr>
-                                <?php else : ?>
-                                    <?php foreach ($users as $user) : ?>
-                                        <tbody>
-                                            <td class="rut-display"><?= h($user->rut) ?></td>
-                                            <td><?= $user->name . ' ' . $user->lastname ?></td>
-                                            <td><?= $user->email ?></td>
-                                            <td><?= $user->role->name ?></td>
-                                            <td class="actions">
-                                                <?= $this->Html->link('<i class="fa fa-edit icon-color"></i>', [
-                                                    'action' => 'edit',
-                                                    $user->id
-                                                ], [
-                                                    'escape' => false,
-                                                    'title' => 'Editar',
-                                                    'class' => 'btn btn-box-tool'
-                                                ]); ?>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>RUT</th>
+                                            <th>Nombre</th>
+                                            <th>Email</th>
+                                            <th>Rol</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <?php if ($users->isEmpty()) : ?>
+                                        <tr>
+                                            <td colspan="5" style="text-align: center;">No se han encontrado usuarios con esas características</td>
+                                        </tr>
+                                    <?php else : ?>
+                                        <?php foreach ($users as $user) : ?>
+                                            <tbody>
+                                                <td class="rut-display"><?= h($user->rut) ?></td>
+                                                <td><?= $user->name . ' ' . $user->lastname ?></td>
+                                                <td><?= $user->email ?></td>
+                                                <td><?= $user->role->name ?></td>
+                                                <td class="actions">
+                                                    <?= $this->Html->link('<i class="fa fa-edit icon-color"></i>', [
+                                                        'action' => 'edit',
+                                                        $user->id
+                                                    ], [
+                                                        'escape' => false,
+                                                        'title' => 'Editar',
+                                                        'class' => 'btn btn-box-tool'
+                                                    ]); ?>
 
-                                                <?php if ($user->is_active == 1) : ?>
-                                                    <?= $this->Form->postLink('<i class="fa-sharp fa-solid fa-trash icon-color-trash"></i>', [
-                                                        'action' => 'delete',
-                                                        $user->id
-                                                    ], [
-                                                        'confirm' => '¿Está seguro de que desea desactivar el registro? El Usuario quedará con su cuenta suspendida hasta que decidas reactivarla',
-                                                        'class' => 'btn btn-box-tool',
-                                                        'title' => 'Desactivar',
-                                                        'escape' => false
-                                                    ]); ?>
-                                                <?php else : ?>
-                                                    <?= $this->Form->postLink('<i class="fa fa-check-circle icon-color" aria-hidden="true"></i>', [
-                                                        'action' => 'activate',
-                                                        $user->id
-                                                    ], [
-                                                        'confirm' => '¿Está seguro de que desea activar el registro?',
-                                                        'class' => 'btn btn-box-tool',
-                                                        'title' => 'Activar',
-                                                        'escape' => false
-                                                    ]); ?>
-                                                <?php endif; ?>
-                                            </td>
-                                        </tbody>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </table>
+                                                    <?php if ($user->is_active == 1) : ?>
+                                                        <?= $this->Form->postLink('<i class="fa-sharp fa-solid fa-trash icon-color-trash"></i>', [
+                                                            'action' => 'delete',
+                                                            $user->id
+                                                        ], [
+                                                            'confirm' => '¿Está seguro de que desea eliminar el registro? El Usuario quedará con su cuenta suspendida hasta que decidas reactivarla',
+                                                            'class' => 'btn btn-box-tool',
+                                                            'title' => 'Desactivar',
+                                                            'escape' => false
+                                                        ]); ?>
+                                                    <?php else : ?>
+                                                        <?= $this->Form->postLink('<i class="fa fa-check-circle icon-color" aria-hidden="true"></i>', [
+                                                            'action' => 'activate',
+                                                            $user->id
+                                                        ], [
+                                                            'confirm' => '¿Está seguro de que desea activar el registro?',
+                                                            'class' => 'btn btn-box-tool',
+                                                            'title' => 'Activar',
+                                                            'escape' => false
+                                                        ]); ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tbody>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -22,7 +22,7 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
 
-/**
+/*
  * The default class to use for all routes
  *
  * The following route classes are supplied with CakePHP and are appropriate
@@ -48,28 +48,28 @@ Router::defaultRouteClass(DashedRoute::class);
 Router::scope('/', function (RouteBuilder $routes) {
     // Register scoped middleware for in scopes.
     $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-        'httpOnly' => true
+        'httpOnly' => true,
     ]));
 
-    /**
+    /*
      * Apply a middleware to the current route scope.
-     * Requires middleware to be registered via `Application::routes()` with `registerMiddleware()`
+     * Requires middleware to be registered through `Application::routes()` with `registerMiddleware()`
      */
     $routes->applyMiddleware('csrf');
 
-    /**
+    /*
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'users', 'action' => 'login']);
 
-    /**
+    /*
      * ...and connect the rest of 'Pages' controller's URLs.
      */
-    $routes->connect('/pages/*', ['controller' => 'UserCourses', 'action' => 'index']);
+    $routes->connect('/pages/*', ['controller' => 'userCourses', 'action' => 'index']);
 
-    /**
+    /*
      * Connect catchall routes for all controllers.
      *
      * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for
@@ -91,14 +91,13 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
-
 Router::prefix('admin', function($routes) {
     // All routes here will be prefixed with `/admin`
     // And have the prefix => admin route element added.
      $routes->connect('/', ['controller' => 'Users', 'action' => 'login']);
      $routes->fallbacks(DashedRoute::class);
  });
-/**
+/*
  * If you need a different set of middleware or none at all,
  * open new scope and define routes there.
  *

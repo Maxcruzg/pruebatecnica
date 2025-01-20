@@ -5,7 +5,7 @@
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= isset($cakeDescription) ? h($cakeDescription) : 'Título por defecto' ?>
+        <?= isset($cakeDescription) ? h($cakeDescription) : 'Prueba técnica' ?>
     </title>
     <?= $this->Html->meta('icon') ?>
 
@@ -51,7 +51,7 @@
     <div class="wrapper">
         <header class="main-header">
             <div class="logo">
-                <h3 style="border-bottom: 2px solid white;">CRUD</h3>
+                <h3 style="border-bottom: 2px solid white;"></h3>
             </div>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle fa fa-bars" data-toggle="offcanvas" role="button">
@@ -71,9 +71,9 @@
         <aside class="main-sidebar">
             <section class="sidebar" style="height: auto;">
                 <ul class="sidebar-menu tree" data-widget="tree">
-                    <li><a href="/admin/users/index"><i class="fa fa-users" aria-hidden="true" style="margin: 9px;"></i><span> Usuarios</span></a></li>
-                    <li><a href="/admin/courses/index"><i class="fa fa-graduation-cap" aria-hidden="true" style="margin: 9px;"></i><span>Cursos</span></a></li>
-                    <li><a href="/users/logout"><i class="fa fa-sign-out" aria-hidden="true" style="margin: 9px;"></i><span> Cerrar Sesión</span></a></li>
+                    <li><a href="/admin/users/index"><i class="fa fa-users" aria-hidden="true" style="margin: 2px;"></i><span> Usuarios</span></a></li>
+                    <li><a href="/admin/courses/index"><i class="fa fa-graduation-cap" aria-hidden="true" style="margin: 2px;"></i><span>Cursos</span></a></li>
+                    <li><a href="/users/logout"><i class="fa fa-sign-out" aria-hidden="true" style="margin: 2px;"></i><span> Cerrar Sesión</span></a></li>
                 </ul>
             </section>
         </aside>

@@ -17,18 +17,24 @@ class UsersController extends AppController
         parent::initialize();
         $this->loadModel('Users');
         $this->loadModel('Roles');
+        $this->loadModel('Courses');
     }
-
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        $this->Auth->allow(['login', 'loguot', 'index']);
-    }
-
 
     public function login()
     {
+
         $this->request->allowMethod(['get', 'post']);
+        $user = $this->getCurrentUser();
+
+        $logeado = $this->request->getSession()->read('Auth');
+        if ($logeado) {
+            if ($user->roles_id == 1) {
+                return $this->redirect(['prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']);
+            } else {
+                return $this->redirect(['controller' => 'UserCourses', 'action' => 'index']);
+            }
+        }
+
         $email = $this->request->getData('email');
         $password = $this->request->getData('password');
 
@@ -39,7 +45,8 @@ class UsersController extends AppController
                 $this->Auth->setUser($user);
                 if ($user->roles_id == 1) {
                     return $this->redirect(['prefix' => 'admin', 'controller' => 'Users', 'action' => 'index']);
-                } else {
+                }
+                if ($user->roles_id == 2) {
                     return $this->redirect(['controller' => 'UserCourses', 'action' => 'index']);
                 }
             } else {
@@ -55,16 +62,26 @@ class UsersController extends AppController
         return $this->redirect(['controller' => 'Users', 'action' => 'login']);
     }
 
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['login']);
+    }
+
+
+
     public function isAuthorized($user)
     {
         $user = $this->currentUser;
         $action = $this->request->getParam('action');
-        if (in_array($action, ['index', 'login', 'logout']) && ($user['role'] == 2)) {
+        if (in_array($action, ['index', 'add', 'delete', 'edit']) && ($user['roles_id'] == 2)) {
             return false;
         } else {
             return true;
         }
     }
+
 
     public function view($id = null)
     {
@@ -74,33 +91,4 @@ class UsersController extends AppController
 
         $this->set('user', $user);
     }
-
-
-
-    // public function edit($id = null)
-    // {
-    //     $roles = $this->Roles->find('list');
-
-    //     $user = $this->Users->get($id, [
-    //         'contain' => [],
-    //     ]);
-
-    //     if ($this->request->is(['patch', 'post', 'put'])) {
-    //         $data = $this->request->getData();
-    //         $user = $this->Users->patchEntity($user, $data);
-    //         if ($data['password'] == $data['password2']) {
-
-    //             if ($this->Users->save($user)) {
-    //                 $this->Flash->success(__('EL usuario ha sido modificado.'));
-
-    //                 return $this->redirect(['action' => 'index']);
-    //             }
-    //             $this->Flash->error(__('El usuario no ha podido ser modificado. Intentelo nuevamente.'));
-    //         } else {
-    //             $this->Flash->error(__('Las contraseñas no coinciden'));
-    //         }
-    //     }
-    //     $this->set(compact('user', 'roles'));
-    // }
-
 }

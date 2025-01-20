@@ -9,6 +9,18 @@ blockquote {
     letter-spacing: 3px;
 }
 
+@media (min-width: 992px) {
+    .container {
+        width: auto !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: auto !important;
+    }
+}
+
 .tamano {
     margin-top: 3px;
     width: 200px;
@@ -203,14 +215,17 @@ body {
     color: #7386D5;
 
 }
-.icon-color-trash{
+
+.icon-color-trash {
     color: rgb(168, 45, 45);
 }
 
 .pagination>.disabled>a {
-    background-color: #54a6d3 !important;
+    background-color: #9216e1 !important;
     color: white !important;
     font-weight: bold !important;
+    margin: 5px;
+    text-align: center;
 }
 
 .entered {

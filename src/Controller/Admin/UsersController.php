@@ -13,6 +13,7 @@ class UsersController extends AppController
         parent::initialize();
         $this->loadModel('Users');
         $this->loadModel('Roles');
+        $this->loadModel('UserCourses');
     }
 
 
@@ -42,22 +43,22 @@ class UsersController extends AppController
     }
 
 
-
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
     }
-    
+
     public function isAuthorized()
     {
         $user = $this->currentUser;
         $action = $this->request->getParam('action');
-        if (in_array($action, ['index', 'view', 'edit', 'logout', 'delete', 'add', 'login', 'activate']) && ($user['roles_id'] == '1')) {
+        if (in_array($action, ['index', 'view', 'edit', 'logout', 'delete', 'add', 'activate']) && ($user['roles_id'] == '1')) {
             return true;
         } else {
             return   $this->Flash->error(__('El usuario no ha podido ingresar. Intentelo nuevamente.'));
         }
     }
+
     public function add()
     {
         $roles = $this->Roles->find('list');
@@ -76,7 +77,7 @@ class UsersController extends AppController
 
             // Eliminar puntos y guion del RUT
             $rut = str_replace(['.', '-'], '', $data['rut']);
-            $data['rut'] = $rut; 
+            $data['rut'] = $rut;
 
             $existingUserByRut = $this->Users->find('all', [
                 'conditions' => ['Users.rut' => $rut]
@@ -139,14 +140,21 @@ class UsersController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        if ($this->Users->inactive($id)) {
-            $this->Flash->success(__('El usuario ha sido desactivado.'));
+        $isEnrolled = $this->UserCourses->exists(['user_id' => $id]);
+
+        if ($isEnrolled) {
+            $this->Flash->error(__('No se puede desactivar el usuario porque está inscrito en un curso.'));
         } else {
-            $this->Flash->error(__('No se pudo desactivar el usuario.'));
+            if ($this->Users->inactive($id)) {
+                $this->Flash->success(__('El usuario ha sido desactivado.'));
+            } else {
+                $this->Flash->error(__('No se pudo desactivar el usuario.'));
+            }
         }
 
         return $this->redirect(['action' => 'index']);
     }
+
 
 
     public function activate($id)

@@ -57,22 +57,41 @@
                 </div>
 
             </div>
-            <div class="col-md-12">
-                <?= $this->Form->create(null, ['url' => ['action' => 'addUserToCourse', $course->id]]) ?>
-                <div class="form-group">
-                    <?= $this->Form->control('user_id', [
-                        'options' => $usersList,
-                        'label' => 'Seleccionar Estudiante',
-                        'class' => 'form-control select2',
-                        'empty' => 'Seleccione Usuario'
-                    ]); ?>
-                </div>
-                <div class="form-group text-center">
-                    <?= $this->Form->button(__('Agregar Estudiante'), ['class' => 'btn btn-primary']) ?>
-                </div>
-                <?= $this->Form->end() ?>
-            </div>
             <div class="box-body">
+                <div class="col-md-12">
+                    <?= $this->Form->create(null, ['url' => ['action' => 'addUserToCourse', $course->id]]) ?>
+                    <div class="form-group">
+                        <?= $this->Form->control('user_id', [
+                            'options' => $usersList,
+                            'label' => 'Seleccionar Estudiante Para Agregar al curso',
+                            'class' => 'form-control select2',
+                            'empty' => 'Seleccione Usuario',
+                            'style' => ' width: 100%;'
+                        ]); ?>
+                    </div>
+                    <div class="form-group text-center">
+                        <?= $this->Form->button(__('Agregar Estudiante'), ['class' => 'btn btn-primary']) ?>
+                    </div>
+                    <?= $this->Form->end() ?>
+                </div>
+                <div class="col-md-12">
+
+                    <div class="search-bar">
+                        <?= $this->Form->create(null, ['type' => 'get']) ?>
+                        <div class="form-group">
+                            <?= $this->Form->control('search', [
+                                'label' => false,
+                                'placeholder' => 'Buscar por RUT, nombre, o email',
+                                'value' => $search ?? '',
+                                'class' => 'form-control'
+                            ]) ?>
+                        </div>
+                        <div class="form-group text-center">
+                            <?= $this->Form->button(__('Buscar Estudiante'), ['class' => 'btn btn-primary']) ?>
+                        </div> <?= $this->Form->end() ?>
+                    </div>
+                </div>
+
                 <div class="col-md-12">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover text-center">
@@ -87,8 +106,8 @@
                             </thead>
                             <?php foreach ($course->users as $user): ?>
                                 <tbody>
-                                <td class="rut-display"><?= h($user->rut) ?></td>
-                                <th><?= h($user->name . ' ' . $user->lastname) ?></th>
+                                    <td class="rut-display"><?= h($user->rut) ?></td>
+                                    <th><?= h($user->name . ' ' . $user->lastname) ?></th>
                                     <th><?= h($user->email) ?></th>
                                     <th><?= h($user->created) ?></th>
                                     <th>
@@ -96,7 +115,8 @@
                                             '<i class="fa-sharp fa-solid fa-trash icon-color"></i> ',
                                             ['action' => 'removeUserFromCourse', $course->id, $user->id],
                                             [
-                                                'escape' => false
+                                                'escape' => false,
+                                                'title' => 'Quitar Usuario'
                                             ]
                                         ); ?>
                                     </th>
@@ -123,7 +143,7 @@
         // ...
     });
 
-    
+
     document.addEventListener('DOMContentLoaded', () => {
         // Formatear el RUT en los elementos con clase 'rut-display'
         const rutElements = document.querySelectorAll('.rut-display');

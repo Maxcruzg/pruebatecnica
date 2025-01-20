@@ -2,7 +2,7 @@
     <div class="col-md-12 special-box">
         <div class="box box-warning">
             <div class="box-header with-border">
-                <h1 class="box-title">CURSOS</h1>
+                <h1 class="box-title">CURSOS INSCRITOS</h1>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus icon-special"></i></button>
                 </div>
@@ -27,8 +27,14 @@
                                             <td><?= $course->start_date ?></td>
                                             <td><?= $course->end_date ?></td>
                                             <td class="actions">
-                                                <?= $this->Html->link(__('View'), ['action' => 'view', $course->id]) ?>
-                                            </td>
+                                                <?= $this->Html->link('<i class="fa-sharp fa-solid fa-eye icon-color"></i>', [
+                                                    'action' => 'view',
+                                                    $course->id
+                                                ], [
+                                                    'escape' => false,
+                                                    'title' => 'Ver',
+                                                    'class' => 'btn btn-box-tool'
+                                                ]); ?> </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -49,5 +55,3 @@
         <?= $this->Paginator->last(__('Ultimo') . ' >>') ?>
     </ul>
 </div>
-
-

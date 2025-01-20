@@ -18,7 +18,7 @@
                             <?= $this->Html->link(
                                 __('<i class="fa-solid fa-floppy-disk"></i> Agregar Curso'),
                                 '#addCourseModal',
-                                ['class' => 'btn btn-admin', 'escape' => false, 'data-toggle' => 'modal', 'data-target' => '#addCourseModal']
+                                ['class' => 'btn btn-success w-100', 'escape' => false, 'data-toggle' => 'modal', 'data-target' => '#addCourseModal']
                             ) ?>
                         </div>
                     </div>
@@ -60,56 +60,58 @@
                 </div>
             </div>
             <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover text-center">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Descripción</th>
-                                        <th>F. Inicio</th>
-                                        <th>F. Término</th>
-                                        <th>Ácciones</th>
-                                    </tr>
-                                </thead>
-                                <?php foreach ($courses as $course) : ?>
-                                    <tbody>
-                                        <td><?= $course->name ?></td>
-                                        <td><?= $course->description  ?></td>
-                                        <td><?= $course->start_date ?></td>
-                                        <td><?= $course->end_date ?></td>
-                                        <td class="actions">
-                                            <?= $this->Html->link('<i class="fa fa-edit icon-color"></i>', '#', [
-                                                'escape' => false,
-                                                'title' => 'Editar',
-                                                'class' => 'btn btn-box-tool',
-                                                'data-toggle' => 'modal',
-                                                'data-target' => '#editCourseModal',
-                                                'data-id' => $course->id  // Aquí agregamos el ID del curso
-                                            ]); ?>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Descripción</th>
+                                            <th>F. Inicio</th>
+                                            <th>F. Término</th>
+                                            <th>Ácciones</th>
+                                        </tr>
+                                    </thead>
+                                    <?php foreach ($courses as $course) : ?>
+                                        <tbody>
+                                            <td><?= $course->name ?></td>
+                                            <td><?= $course->description  ?></td>
+                                            <td><?= $course->start_date ?></td>
+                                            <td><?= $course->end_date ?></td>
+                                            <td class="actions">
+                                                <?= $this->Html->link('<i class="fa fa-edit icon-color"></i>', '#', [
+                                                    'escape' => false,
+                                                    'title' => 'Editar',
+                                                    'class' => 'btn btn-box-tool',
+                                                    'data-toggle' => 'modal',
+                                                    'data-target' => '#editCourseModal',
+                                                    'data-id' => $course->id  // Aquí agregamos el ID del curso
+                                                ]); ?>
 
-                                            <?= $this->Html->link('<i class="fa-sharp fa-solid fa-eye icon-color"></i>', [
-                                                'action' => 'view',
-                                                $course->id
-                                            ], [
-                                                'escape' => false,
-                                                'title' => 'Ver',
-                                                'class' => 'btn btn-box-tool'
-                                            ]); ?>
-                                            <?= $this->Form->postLink('<i class="fa-sharp fa-solid fa-trash icon-color-trash"></i>   ', [
-                                                'action' => 'delete',
-                                                $course->id
-                                            ], [
-                                                'confirm' => '¿Está seguro de que desea desactivar el registro? El Usuario quedará con su cuenta suspendida hasta que decida reactivarla',
-                                                'class' => 'btn btn-box-tool',
-                                                'title' => 'Eliminar',
-                                                'escape' => false
-                                            ]); ?>
-                                        </td>
-                                    </tbody>
-                                <?php endforeach; ?>
-                            </table>
+                                                <?= $this->Html->link('<i class="fa-sharp fa-solid fa-eye icon-color"></i>', [
+                                                    'action' => 'view',
+                                                    $course->id
+                                                ], [
+                                                    'escape' => false,
+                                                    'title' => 'Ver',
+                                                    'class' => 'btn btn-box-tool'
+                                                ]); ?>
+                                                <?= $this->Form->postLink('<i class="fa-sharp fa-solid fa-trash icon-color-trash"></i>   ', [
+                                                    'action' => 'delete',
+                                                    $course->id
+                                                ], [
+                                                    'confirm' => '¿Está seguro de que desea eliminar el curso? ',
+                                                    'class' => 'btn btn-box-tool',
+                                                    'title' => 'Eliminar',
+                                                    'escape' => false
+                                                ]); ?>
+                                            </td>
+                                        </tbody>
+                                    <?php endforeach; ?>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

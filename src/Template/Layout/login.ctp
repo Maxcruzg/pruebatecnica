@@ -4,8 +4,7 @@
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
+        <?= isset($cakeDescription) ? h($cakeDescription) : 'Prueba técnica' ?>
     </title>
     <?= $this->Html->meta('icon') ?>
 

@@ -93,7 +93,7 @@
                             <div class="btn">
                                 <br>
                                 <?= $this->Form->button(
-                                    __('<i class="fa-solid fa-floppy-disk"></i> Modificar'),
+                                    __('<i class="fa-solid fa-floppy-disk"></i> Agregar'),
                                     ['class' => 'btn btn-danger']
                                 ); ?>
                             </div>

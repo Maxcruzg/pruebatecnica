@@ -34,7 +34,7 @@
                                 ]); ?>
                             </div>
                             <div class="col-md-2">
-                                <?= $this->Form->control('role_id', [
+                                <?= $this->Form->control('roles_id', [
                                     'label' => 'Rol',
                                     'type' => 'select',
                                     'options' => $roles,

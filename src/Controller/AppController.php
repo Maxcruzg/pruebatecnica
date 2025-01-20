@@ -64,7 +64,7 @@ class AppController extends Controller
     {
         if (isset($this->request->params['prefix']) && $this->request->params['prefix'] == 'admin') {
             $this->viewBuilder()->setlayout('admin');
-        } else if($this->request->params['action'] == 'login' || $this->request->params['action'] == 'add' ){
+        } else if($this->request->params['action'] == 'login' ){
             $this->viewBuilder()->setlayout('login');
         }else{
             $this->viewBuilder()->setlayout('default');

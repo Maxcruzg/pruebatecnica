@@ -18,7 +18,7 @@
 <head>
     <?= $this->Html->charset() ?>
     <title>
-        <?= $this->fetch('title') ?>
+        <?= isset($cakeDescription) ? h($cakeDescription) : 'Prueba técnica' ?>
     </title>
     <?= $this->Html->meta('icon') ?>
 

@@ -33,7 +33,6 @@ class CoursesController extends AppController
 
         if ($this->request->is('ajax')) {
             try {
-                // Obtén los datos del formulario
                 $data = $this->request->getData();
 
                 // Convierte las fechas al formato adecuado
@@ -45,10 +44,8 @@ class CoursesController extends AppController
                     $data['end_date'] = date('Y-m-d', strtotime($data['end_date']));
                 }
 
-                // Pega los datos en la entidad
                 $course = $this->Courses->patchEntity($course, $data);
 
-                // Guarda los datos
                 if ($this->Courses->save($course)) {
                     $response = ['status' => 'success', 'message' => 'Curso agregado correctamente.'];
                 } else {
@@ -69,7 +66,6 @@ class CoursesController extends AppController
 
     public function edit($id = null)
     {
-        // Obtener el curso con el ID proporcionado
         $course = $this->Courses->get($id);
 
         // Si la solicitud es AJAX, obtener y devolver los datos del curso
@@ -84,11 +80,10 @@ class CoursesController extends AppController
                 return;
             }
 
-            // Si la solicitud es POST, PUT o PATCH (cuando se envían los datos para actualizar)
             if ($this->request->is(['patch', 'post', 'put'])) {
                 $data = $this->request->getData();
 
-                // Convertir las fechas al formato 'Y-m-d' si es necesario
+                // Convertir las fechas al formato 'Y-m-d'
                 if (!empty($data['start_date'])) {
                     $data['start_date'] = date('Y-m-d', strtotime($data['start_date']));
                 }
@@ -96,15 +91,13 @@ class CoursesController extends AppController
                     $data['end_date'] = date('Y-m-d', strtotime($data['end_date']));
                 }
 
-                // Asociar los datos al objeto Course
                 $course = $this->Courses->patchEntity($course, $data);
 
-                // Intentar guardar los cambios
                 if ($this->Courses->save($course)) {
                     $this->set([
                         'status' => 'success',
                         'message' => 'El curso ha sido actualizado.',
-                        'course' => $course, // Devolver el curso actualizado
+                        'course' => $course,
                         '_serialize' => ['status', 'message', 'course']
                     ]);
                 } else {
@@ -118,56 +111,73 @@ class CoursesController extends AppController
             }
         }
 
-        // Si no es una solicitud AJAX, redirigir o manejar de forma estándar.
         return $this->redirect(['action' => 'index']);
     }
 
+
     public function view($id)
     {
+        $search = $this->request->getQuery('search');
+
         $course = $this->Courses->get($id, [
             'contain' => ['Users'],
         ]);
 
-        $usersList = $this->Users->find()
-            ->where([
-                'Users.id NOT IN' => $this->Users->UserCourses->find('')
-                    ->select(['user_id'])
-                    ->where(['course_id' => $id])
-            ])
-            ->all();
+        if (!empty($search)) {
+            $course->users = array_filter($course->users, function ($user) use ($search) {
+                return stripos($user->rut, $search) !== false ||
+                    stripos($user->name, $search) !== false ||
+                    stripos($user->lastname, $search) !== false ||
+                    stripos($user->email, $search) !== false;
+            });
+        }
 
-        $usersList = $usersList->combine('id', function ($user) {
-            return $user->rut . ', ' . $user->name . ' ' . $user->lastname . ', ' . $user->email;
-        });
+        $excludedUserIds = $this->UserCourses->find()
+            ->select(['user_id'])
+            ->where(['course_id' => $id])
+            ->extract('user_id')
+            ->toArray();
 
-        $this->set(compact('course', 'usersList'));
+        $usersQuery = $this->Users->find('list', [
+            'keyField' => 'id',
+            'valueField' => function ($user) {
+                return 'RUT: ' . $user->rut . ', NOMBRE: ' . $user->name . ' ' . $user->lastname . ', CORREO: ' . $user->email;
+            }
+        ])
+            ->where(['is_active' => 1]); // Solo incluir usuarios activos
+
+        if (!empty($excludedUserIds)) {
+            $usersQuery->where(['Users.id NOT IN' => $excludedUserIds]);
+        }
+
+        $usersList = $usersQuery->toArray();
+
+        $this->set(compact('course', 'usersList', 'search'));
     }
+
+
+
 
     public function addUserToCourse($courseId)
     {
         if ($this->request->is('post')) {
-            // Obtener el user_id desde el formulario
             $userId = $this->request->getData('user_id');
 
             if ($userId) {
-                // Verificar que el usuario y el curso existen
                 $user = $this->Users->find()->where(['id' => $userId])->first();
                 $course = $this->Courses->find()->where(['id' => $courseId])->first();
 
                 if ($user && $course) {
-                    // Crear la nueva relación en la tabla user_courses
                     $userCourse = $this->UserCourses->newEntity();
                     $userCourse->user_id = $userId;
                     $userCourse->course_id = $courseId;
 
-                    // Intentar guardar la relación
                     if ($this->UserCourses->save($userCourse)) {
                         $this->Flash->success(__('El usuario ha sido agregado al curso.'));
                     } else {
                         $this->Flash->error(__('No se pudo agregar el usuario al curso.'));
                     }
                 } else {
-                    // Mostrar error si el usuario o el curso no existen
                     $this->Flash->error(__('Usuario o curso no encontrado.'));
                 }
             } else {
@@ -180,13 +190,11 @@ class CoursesController extends AppController
 
     public function removeUserFromCourse($courseId, $userId)
     {
-        // Obtener el curso y el usuario
         $course = $this->Courses->get($courseId, [
             'contain' => ['Users'],
         ]);
         $user = $this->Users->get($userId);
 
-        // Buscar la relación en la tabla user_courses
         $userCourse = $this->UserCourses->find()
             ->where(['user_id' => $userId, 'course_id' => $courseId])
             ->first();
@@ -209,11 +217,23 @@ class CoursesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+
+        $userCoursesCount = $this->Courses->UserCourses
+            ->find()
+            ->where(['course_id' => $id])
+            ->count();
+
+        if ($userCoursesCount > 0) {
+            $this->Flash->error(__('El curso no puede ser eliminado porque tiene usuarios asociados.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        // Si no hay usuarios asociados, proceder con la eliminación
         $course = $this->Courses->get($id);
         if ($this->Courses->delete($course)) {
-            $this->Flash->success(__('The course has been deleted.'));
+            $this->Flash->success(__('El curso ha sido eliminado.'));
         } else {
-            $this->Flash->error(__('The course could not be deleted. Please, try again.'));
+            $this->Flash->error(__('El curso no ha podido ser eliminado.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -221,11 +241,12 @@ class CoursesController extends AppController
 
 
 
+
     public function isAuthorized()
     {
         $user = $this->currentUser;
         $action = $this->request->getParam('action');
-        if (in_array($action, ['index', 'view', 'edit', 'delete', 'add', 'addUserToCourse', 'removeUserFromCourse', 'login', 'logout']) && ($user['roles_id'] == '1')) {
+        if (in_array($action, ['index', 'view', 'edit', 'delete', 'add', 'addUserToCourse', 'removeUserFromCourse', 'logout']) && ($user['roles_id'] == '1')) {
             return true;
         } else {
             return   $this->Flash->error(__('El usuario no ha podido ingresar. Intentelo nuevamente :D.'));

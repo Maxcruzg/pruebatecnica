@@ -32,7 +32,7 @@ class UserCoursesController extends AppController
     {
         $user = $this->currentUser;
         $action = $this->request->getParam('action');
-        if (in_array($action, ['index']) && ($user['role'] == 2)) {
+        if (in_array($action, ['index']) && ($user['roles_id'] == 2)) {
             return false;
         } else {
             return true;
@@ -49,60 +49,9 @@ class UserCoursesController extends AppController
     public function view($id = null)
     {
         $course = $this->Courses->get($id, [
-            'contain' => ['Users', 'UserCourses'],
+            'contain' => ['Users', 'UserCourses'], 
         ]);
     
         $this->set('course', $course);
     }
-    
-
-    public function add()
-    {
-        $userCourse = $this->UserCourses->newEntity();
-        if ($this->request->is('post')) {
-            $userCourse = $this->UserCourses->patchEntity($userCourse, $this->request->getData());
-            if ($this->UserCourses->save($userCourse)) {
-                $this->Flash->success(__('The user course has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The user course could not be saved. Please, try again.'));
-        }
-        $users = $this->UserCourses->Users->find('list', ['limit' => 200]);
-        $courses = $this->UserCourses->Courses->find('list', ['limit' => 200]);
-        $this->set(compact('userCourse', 'users', 'courses'));
-    }
-
-    public function edit($id = null)
-    {
-        $userCourse = $this->UserCourses->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $userCourse = $this->UserCourses->patchEntity($userCourse, $this->request->getData());
-            if ($this->UserCourses->save($userCourse)) {
-                $this->Flash->success(__('The user course has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The user course could not be saved. Please, try again.'));
-        }
-        $users = $this->UserCourses->Users->find('list', ['limit' => 200]);
-        $courses = $this->UserCourses->Courses->find('list', ['limit' => 200]);
-        $this->set(compact('userCourse', 'users', 'courses'));
-    }
-
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $userCourse = $this->UserCourses->get($id);
-        if ($this->UserCourses->delete($userCourse)) {
-            $this->Flash->success(__('The user course has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user course could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
-
 }
